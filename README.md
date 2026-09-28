@@ -1,35 +1,61 @@
-# React + TypeScript + Vite
+# Formik Registration Form
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Навчальний проєкт — форма реєстрації, створена на React і TypeScript з використанням Formik та Yup.
 
-Currently, two official plugins are available:
+**Демо:** [hillel-formik.vercel.app](https://hillel-formik.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Можливості
 
-## React Compiler
+- Керування станом форми за допомогою `Formik`.
+- Окремий компонент поля вводу на базі Formik `Field`.
+- Валідація полів за схемою Yup; повідомлення про помилки відображаються через `ErrorMessage`.
+- Перевірка імені (не менше 2 символів), пароля (не менше 8 символів) та формату електронної пошти. Усі поля обов’язкові.
+- Після успішного надсилання поля очищуються, а повідомлення про успіх відображається під формою, не зсуваючи її.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+> Форма демонструє клієнтську валідацію та обробку надсилання. Серверного API немає: значення форми виводяться в консоль браузера, дані не зберігаються та не передаються на сервер.
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+## Технології
 
-## Expanding the Oxlint configuration
+- React 19
+- TypeScript
+- Vite
+- Formik
+- Yup
+- Oxlint
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Локальний запуск
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+Потрібні Node.js і npm.
+
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Після запуску Vite виведе адресу локального сервера в термінал.
+
+## Команди
+
+| Команда | Призначення |
+| --- | --- |
+| `npm run dev` | Запустити сервер розробки |
+| `npm run build` | Перевірити типи TypeScript і зібрати production-версію в `dist/` |
+| `npm run preview` | Переглянути production-збірку локально |
+| `npm run lint` | Запустити Oxlint |
+
+## Структура проєкту
+
+```text
+src/
+├── components/
+│   ├── App.tsx             # Кореневий компонент
+│   ├── BasicForm.tsx       # Formik-форма та обробка надсилання
+│   └── Input.tsx           # Поле форми з Formik Field і ErrorMessage
+├── helpers/
+│   └── validationSchema.ts # Yup-схема валідації
+├── types/
+│   └── FormValues.ts       # Тип значень форми
+├── App.css                 # Стилі форми
+├── index.css               # Глобальні стилі
+└── main.tsx                # Точка входу застосунку
+```
