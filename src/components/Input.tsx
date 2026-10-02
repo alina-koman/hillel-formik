@@ -1,7 +1,13 @@
-import type { InputHTMLAttributes } from "react";
-import { ErrorMessage, Field } from "formik";
+import { Field } from "formik";
+import type { FieldProps } from "formik";
+import TextField from "@mui/material/TextField";
+import type { TextFieldProps } from "@mui/material/TextField";
+import type { FormValues } from "../types/FormValues.ts";
 
-type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "name"> & {
+type InputProps = Omit<
+  TextFieldProps,
+  "name" | "label" | "error" | "helperText" | "variant" | "fullWidth"
+> & {
   name: string;
   label: string;
 };
@@ -9,19 +15,22 @@ type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "name"> & {
 const Input = ({ name, label, ...inputProps }: InputProps) => {
   return (
     <div className="form-field">
-      <label htmlFor={name}>{label}</label>
       <Field
-        id={name}
         name={name}
-        aria-describedby={`${name}-error`}
-        {...inputProps}
-      />
-      <ErrorMessage
-        name={name}
-        component="div"
-        className="form-error"
-        id={`${name}-error`}
-      />
+      >
+        {({ field, meta }: FieldProps<string, FormValues>) => (
+          <TextField
+            {...field}
+            {...inputProps}
+            id={name}
+            label={label}
+            fullWidth
+            variant="outlined"
+            error={meta.touched && Boolean(meta.error)}
+            helperText={meta.touched && meta.error ? meta.error : " "}
+          />
+        )}
+      </Field>
     </div>
   );
 };
